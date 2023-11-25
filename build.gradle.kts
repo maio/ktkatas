@@ -1,5 +1,8 @@
+import org.gradle.internal.impldep.org.junit.platform.launcher.EngineFilter.includeEngines
+import org.jetbrains.kotlin.js.translate.context.Namer.kotlin
+
 plugins {
-    kotlin("jvm") version "1.9.20"
+    kotlin("jvm") version "1.9.21"
 }
 
 group = "cz.maio"
