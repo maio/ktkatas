@@ -1,5 +1,4 @@
-import org.gradle.internal.impldep.org.junit.platform.launcher.EngineFilter.includeEngines
-import org.jetbrains.kotlin.js.translate.context.Namer.kotlin
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.9.21"
@@ -31,12 +30,33 @@ tasks {
     }
 }
 
+private val javaLanguageVersion = JavaLanguageVersion.of("21")
+
+java {
+    toolchain {
+        languageVersion.set(javaLanguageVersion)
+    }
+}
+
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain {
+        languageVersion.set(javaLanguageVersion)
+    }
 
     sourceSets.all {
         languageSettings {
             languageVersion = "2.0"
         }
+    }
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    sourceCompatibility = javaLanguageVersion.toString()
+    targetCompatibility = javaLanguageVersion.toString()
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = javaLanguageVersion.toString()
     }
 }
